@@ -1,0 +1,7 @@
+#!/bin/sh
+
+#echo "prerm"
+
+stop apps/battery-icon
+
+exit 0

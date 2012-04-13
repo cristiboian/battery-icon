@@ -1,0 +1,25 @@
+Source: battery-icon
+Section: user/utilities
+Priority: optional
+Maintainer: cristi <cristi@unknown>
+Build-Depends: debhelper (>= 5), libqt4-dev, libqmsystem2-dev
+Standards-Version: 3.7.3
+Homepage: <insert the upstream URL, if relevant>
+
+Package: battery-icon
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Icon showing the battery level.
+ Battery Icon is a small widget-like app which just shows the battery level in 
+ its icon on the application grid.
+XSBC-Maemo-Display-Name: Battery Icon
+XB-Maemo-Icon-26:
+ iVBORw0KGgoAAAANSUhEUgAAAFEAAABRCAYAAACqj0o2AAAAAXNSR0IArs4c
+ 6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAAOxAAADsQBlSsOGwAAAAd0
+ SU1FB9wEDRIIMF9gxVMAAAEASURBVHhe7dvBbYNAFEXRIXJnLmpcAhSV2sgm
+ IDM2o7HyZCXKOSv4yyth+AiXAgAAAAAAwKumdV3XdsijaZqmdra5lFLKsizt
+ nDu11nZ0cNkObrfb/Zxv8zy3owd7xFJKKZ+Hs/e4ltPL5BcY+qn7aAe8TsQA
+ EQNEDBAxQMQAEQOOz4mc6q3HIg7orcW1VhFHPVuLt5VQxHHterpf3m4sASIG
+ iBggYoCIASIGiBggYoCIASIGiBggYoCIAd7ijPNS9qd6n5OIOGD4gyb6ep/W
+ ubEEiBggYoCIASIGiBggYsDxOfF6OHuX03Xqr9gj9tYa+vwZaFBvYwEAAAAA
+ AP6dL9bQIkP2A9J2AAAAAElFTkSuQmCC

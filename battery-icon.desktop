@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Battery
+Exec=
+Icon=/opt/battery-icon/icons/battery-icon.png
+Type=Application
+Categories=X-MeeGo;
+OnlyShowIn=X-MeeGo;

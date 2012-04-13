@@ -1,0 +1,9 @@
+#!/bin/sh
+
+#echo "postinst"
+chown user.users /usr/share/applications/battery-icon.desktop
+chown -R user.users /opt/battery-icon/icons
+
+#echo "FIXME start"
+start apps/battery-icon
+exit 0

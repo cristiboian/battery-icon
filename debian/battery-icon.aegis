@@ -1,0 +1,15 @@
+<aegis>
+	<request policy="add">
+        <credential name="UID::user" />
+        <credential name="GID::users" />
+	    <for path="/opt/battery-icon/bin/battery-icon" />
+	    <for path="/opt/battery-icon/bin/start-battery-icon.sh" />
+	    <for path="/opt/battery-icon/bin/update-desktop.sh" />
+	</request>
+
+    <!--	<for path="applauncherd-launcher::/usr/bin/applauncherd.bin" id="" /> -->
+    <request>
+        <credential name="CAP::chown" />
+        <for path="/var/lib/dpkg/info/battery-icon.postinst" />
+    </request>
+</aegis>
