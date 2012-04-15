@@ -11,6 +11,7 @@
 #define ICON_FILE "/opt/battery-icon/icons/battery-icon.png"
 #define ICON_BASE "/opt/battery-icon/icons/base-icon.png"
 #define ICON_BASE_CHARGING "/opt/battery-icon/icons/base-charging-icon.png"
+#define ICON_BASE_EMPTY "/opt/battery-icon/icons/base-empty-icon.png"
 
 class IconGenerator : public QObject
 {
@@ -91,27 +92,36 @@ void IconGenerator::chargingChanged(MeeGo::QmBattery::ChargingState newChState)
 
 void IconGenerator::drawCurrentState()
 {
-//    pct = 5;
     qDebug() << Q_FUNC_INFO << pct;
     QString pctStr = QString("%1%").arg(pct);
 
     QString iconBaseFile(ICON_BASE);
 
+    /* this does not work properly because it takes so much time
+     * for the daemon to start after boot (~ 1min)
+    if (batState == MeeGo::QmBattery::StateEmpty)
+        iconBaseFile = ICON_BASE_EMPTY;
+    */
+
     if (chState == MeeGo::QmBattery::StateCharging)
         iconBaseFile = ICON_BASE_CHARGING;
 
     QImage icon(iconBaseFile);
-    if (icon.isNull())
-        qDebug() << "icon is null";
+    if (icon.isNull()) {
+        qDebug() << "Base icon is null.";
+        // TODO probably we should not continue after this
+    }
 
-    QColor fillColor("green");
-    if (batState == MeeGo::QmBattery::StateLow)
-        fillColor.setNamedColor("red");
-
+    QColor fillColor(0x00c000);
+    int fillWidth = pct * 70 / 100;
+    if (batState == MeeGo::QmBattery::StateLow) {
+        fillColor.setRgb(0xe00000); // red
+        fillWidth = 4; // keep a min of 4 pixels so that the red color is visible
+    }
     QPainter painter(&icon);
     QPen pen(QColor("white"));
     painter.setPen(pen);
-    painter.fillRect(2, 22, pct * 70 / 100, 38, fillColor);
+    painter.fillRect(2, 22, fillWidth, 38, fillColor);
 
     painter.setFont(QFont("Arial", 20, QFont::Bold)); // for 100% font 20
     painter.drawText(3, 15, 70, 50, Qt::AlignCenter, pctStr); // for 100% x = 3
@@ -119,7 +129,7 @@ void IconGenerator::drawCurrentState()
     painter.end();
 
     if (!icon.save(ICON_FILE)) {
-        qDebug() << "failed to save image to" << ICON_FILE;
+        qDebug() << "Failed to save image to" << ICON_FILE;
         return;
     }
 
