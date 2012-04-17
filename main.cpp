@@ -112,8 +112,8 @@ void IconGenerator::drawCurrentState()
         // TODO probably we should not continue after this
     }
 
-    QColor fillColor(0x00c000);
-    int fillWidth = pct * 70 / 100;
+    QColor fillColor(0x00b000);     // green
+    int fillWidth = pct * 70 / 100; // we only have 70 pixeles to fill
     if (batState == MeeGo::QmBattery::StateLow) {
         fillColor.setRgb(0xe00000); // red
         fillWidth = 4; // keep a min of 4 pixels so that the red color is visible
