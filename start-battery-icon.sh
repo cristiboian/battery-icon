@@ -3,4 +3,4 @@
 export DISPLAY=:0
 source /tmp/session_bus_address.user
 
-exec /opt/battery-icon/bin/battery-icon
+exec /usr/bin/single-instance /opt/battery-icon/bin/battery-icon
