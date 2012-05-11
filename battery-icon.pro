@@ -11,8 +11,8 @@ QT       += core
 TARGET = battery-icon
 CONFIG   += console mobility qmsystem2
 CONFIG   -= app_bundle
-
-#MOBILITY += systeminfo
+CONFIG += link_pkgconfig
+PKGCONFIG += gq-gconf
 
 TEMPLATE = app
 

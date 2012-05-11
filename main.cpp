@@ -3,7 +3,10 @@
 #include <QImage>
 #include <QPainter>
 #include <QProcess>
+#include <QMutex>
 #include <QDebug>
+
+#include <gconfitem.h>
 
 #include <qmbattery.h>
 
@@ -12,6 +15,9 @@
 #define ICON_BASE "/opt/battery-icon/icons/base-icon.png"
 #define ICON_BASE_CHARGING "/opt/battery-icon/icons/base-charging-icon.png"
 #define ICON_BASE_EMPTY "/opt/battery-icon/icons/base-empty-icon.png"
+
+#define ICON_BASE_SB "/opt/battery-icon/icons/base-sb-icon.png"
+#define ICON_SB "/opt/battery-icon/icons/sb-icon.png"
 
 class IconGenerator : public QObject
 {
@@ -31,6 +37,8 @@ private:
     int pct;
     MeeGo::QmBattery::BatteryState batState;
     MeeGo::QmBattery::ChargingState chState;
+
+    QMutex mutex;
 };
 
 
@@ -92,6 +100,10 @@ void IconGenerator::chargingChanged(MeeGo::QmBattery::ChargingState newChState)
 
 void IconGenerator::drawCurrentState()
 {
+    if(!mutex.tryLock(3000)) { // 3s
+        qDebug() << Q_FUNC_INFO << "cannot lock mutex";
+        return;
+    }
     qDebug() << Q_FUNC_INFO << pct;
     QString pctStr = QString("%1%").arg(pct);
 
@@ -106,6 +118,7 @@ void IconGenerator::drawCurrentState()
     if (chState == MeeGo::QmBattery::StateCharging)
         iconBaseFile = ICON_BASE_CHARGING;
 
+    // Application icon
     QImage icon(iconBaseFile);
     if (icon.isNull()) {
         qDebug() << "Base icon is null.";
@@ -130,6 +143,7 @@ void IconGenerator::drawCurrentState()
 
     if (!icon.save(ICON_FILE)) {
         qDebug() << "Failed to save image to" << ICON_FILE;
+        mutex.unlock();
         return;
     }
 
@@ -138,6 +152,29 @@ void IconGenerator::drawCurrentState()
         qDebug() << "Failed to update desktop file. Error code:" << ret;
     }
 
+    // Stand-by screen icon
+    QImage sbIcon(ICON_BASE_SB);
+    if (sbIcon.isNull()) {
+        qDebug() << "Stand-by Base icon is null.";
+    }
+    painter.begin(&sbIcon);
+    painter.setPen(pen); // reuse
+    painter.setFont(QFont("Arial", 20, QFont::Bold));
+    painter.drawText(3, 15, 70, 50, Qt::AlignCenter, pctStr);
+    painter.end();
+
+    if (!sbIcon.save(ICON_SB)) {
+        qDebug() << "Failed to save image to" << ICON_SB;
+        mutex.unlock();
+        return;
+    }
+
+    GConfItem opLogo("/desktop/meego/screen_lock/low_power_mode/operator_logo");
+    opLogo.unset();
+    opLogo.set(QVariant(ICON_SB));
+
+
+    mutex.unlock();
 }
 
 
