@@ -1,8 +1,17 @@
 #!/bin/sh
 
 #echo "postinst"
-chown user.users /usr/share/applications/battery-icon.desktop
+#chown user.users /usr/share/applications/battery-icon.desktop
 chown -R user.users /opt/battery-icon/icons
 
+#echo FIXME start!!!
 start apps/battery-icon
-exit 0
+
+GCONF_OP_LOGO="/desktop/meego/screen_lock/low_power_mode/operator_logo"
+BATTERY_OP_LOGO="/opt/battery-icon/icons/sb-icon.png"
+
+FILE_OP_LOGO=`gconftool-2 -g $GCONF_OP_LOGO`
+
+if [ -z $FILE_OP_LOGO ]; then
+    gconftool-2 -s -t string $GCONF_OP_LOGO $BATTERY_OP_LOGO
+fi

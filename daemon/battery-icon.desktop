@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Battery
-Exec=/usr/bin/single-instance /opt/battery-icon/bin/battery-icon
+Exec=/usr/bin/single-instance /opt/battery-icon/bin/battery-icon-app
 Icon=/opt/battery-icon/icons/battery-icon.png
 Type=Application
 Categories=X-MeeGo;

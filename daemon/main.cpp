@@ -49,10 +49,6 @@ IconGenerator::IconGenerator()
     batState = bat.getBatteryState();
     chState = bat.getChargingState();
 
-    // a hack to keep in tune with the system
-    if (batState == MeeGo::QmBattery::StateFull)
-        pct = 100;
-
     qDebug() << Q_FUNC_INFO << pct << "%" << "bat:" << batState << "ch:" << chState;
 
     connect(&bat, SIGNAL(batteryRemainingCapacityChanged(int, int)),
@@ -67,10 +63,6 @@ IconGenerator::IconGenerator()
 void IconGenerator::capacityChanged(int newPct, int bars)
 {
     qDebug() << Q_FUNC_INFO << newPct;
-
-    // another hack to keep in tune with the system
-    if (batState == MeeGo::QmBattery::StateFull && newPct != 100)
-        return;
 
     if(pct != newPct) {
         pct = newPct;
@@ -105,7 +97,16 @@ void IconGenerator::drawCurrentState()
         return;
     }
     qDebug() << Q_FUNC_INFO << pct;
-    QString pctStr = QString("%1%").arg(pct);
+
+    // This is the user visible percentage which is kept at 100% when the
+    // battery is in StateFull. This is how the system shows it.
+    int pctUser;
+    if (batState == MeeGo::QmBattery::StateFull)
+        pctUser = 100;
+    else
+        pctUser = pct;
+
+    QString pctStr = QString("%1%").arg(pctUser);
 
     QString iconBaseFile(ICON_BASE);
 
@@ -126,7 +127,7 @@ void IconGenerator::drawCurrentState()
     }
 
     QColor fillColor(0x00b000);     // green
-    int fillWidth = pct * 70 / 100; // we only have 70 pixeles to fill
+    int fillWidth = pctUser * 70 / 100; // we only have 70 pixeles to fill
     if (batState == MeeGo::QmBattery::StateLow) {
         fillColor.setRgb(0xe00000); // red
         fillWidth = 4; // keep a min of 4 pixels so that the red color is visible
@@ -159,7 +160,7 @@ void IconGenerator::drawCurrentState()
     }
     painter.begin(&sbIcon);
     painter.setPen(pen); // reuse
-    painter.setFont(QFont("Arial", 20, QFont::Bold));
+    painter.setFont(QFont("Arial", 21, QFont::DemiBold));
     painter.drawText(3, 15, 70, 50, Qt::AlignCenter, pctStr);
     painter.end();
 
@@ -170,8 +171,10 @@ void IconGenerator::drawCurrentState()
     }
 
     GConfItem opLogo("/desktop/meego/screen_lock/low_power_mode/operator_logo");
-    opLogo.unset();
-    opLogo.set(QVariant(ICON_SB));
+    if (opLogo.value().toString() == ICON_SB) {
+        opLogo.unset();
+        opLogo.set(QVariant(ICON_SB));
+    }
 
 
     mutex.unlock();

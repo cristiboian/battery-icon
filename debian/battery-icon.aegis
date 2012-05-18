@@ -3,11 +3,16 @@
         <credential name="UID::user" />
         <credential name="GID::users" />
 	    <for path="/opt/battery-icon/bin/battery-icon" />
+    <!--    <for path="/opt/battery-icon/bin/battery-icon-app" /> -->
 	    <for path="/opt/battery-icon/bin/start-battery-icon.sh" />
-	    <for path="/opt/battery-icon/bin/update-desktop.sh" />
+    <!--    <for path="applauncherd-launcher::/usr/bin/applauncherd.bin" />  -->
 	</request>
 
-    <!--	<for path="applauncherd-launcher::/usr/bin/applauncherd.bin" id="" /> -->
+    <request policy="add">
+        <credential name="UID::root" />
+        <credential name="GID::root" />
+        <for path="/opt/battery-icon/bin/update-desktop.sh" />
+    </request>
     <request>
         <credential name="CAP::chown" />
         <for path="/var/lib/dpkg/info/battery-icon.postinst" />

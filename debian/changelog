@@ -1,8 +1,11 @@
 battery-icon (2.0) harmattan; urgency=low
 
   * Added battery indicator on stand-by screen.
+  * Tapping on the icon now opens an application with information and settings
+  about the battery.
+  * Bug fixes.
 
- -- Cristi Boian <apps@cristiboian.com>  Thu, 10 May 2012 16:51:54 +0300
+ -- Cristi Boian <apps@cristiboian.com>  Wed, 16 May 2012 23:39:46 +0300
 
 battery-icon (1.0) harmattan; urgency=low
 

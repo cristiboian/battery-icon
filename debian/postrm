@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#echo "postrm"
+
+GCONF_OP_LOGO="/desktop/meego/screen_lock/low_power_mode/operator_logo"
+BATTERY_OP_LOGO="/opt/battery-icon/icons/sb-icon.png"
+
+FILE_OP_LOGO=`gconftool-2 -g $GCONF_OP_LOGO`
+
+if [ "$FILE_OP_LOGO" == "$BATTERY_OP_LOGO" ]; then
+    gconftool-2 -u $GCONF_OP_LOGO
+fi
+
+
+exit 0
