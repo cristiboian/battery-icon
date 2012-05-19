@@ -135,7 +135,7 @@ void BatteryIconApp::updateLabels()
             timeFormat(bat.getRemainingTalkTime(powerMode)));
     sbTime.setText(QString("Stand-by time: ") +
             timeFormat(bat.getRemainingIdleTime(powerMode)));
-    activeTime.setText(QString("Active time: ") +
+    activeTime.setText(QString("Active usage time: ") +
             timeFormat(bat.getRemainingActiveTime(powerMode)));
 
 }
