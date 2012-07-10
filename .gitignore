@@ -1,0 +1,16 @@
+Makefile
+*~
+debian/files
+debian/stamp-makefile-build
+debian/stamp-makefile-install
+debian/substvars
+debian/battery-icon.debhelper.log
+debian/battery-icon.substvars
+debian/battery-icon
+.moc
+.obj
+app/battery-icon-app
+build-stamp
+configure-stamp
+daemon/battery-icon
+

@@ -1,3 +1,7 @@
+# Copyright (C) 2012 Cristi Boian
+# This file is part of Battery Icon
+# License: GPLv2
+
 QT       += core
 
 TARGET = battery-icon-app
