@@ -1,3 +1,9 @@
+battery-icon (2.1) harmattan; urgency=low
+
+  * TODO
+
+ -- Cristi Boian <apps@cristiboian.com>  Sun, 17 Feb 2013 22:04:41 +0200
+
 battery-icon (2.0) harmattan; urgency=low
 
   * Added battery indicator on stand-by screen.

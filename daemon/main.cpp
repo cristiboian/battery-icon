@@ -39,9 +39,83 @@
 #define ICON_BASE "/opt/battery-icon/icons/base-icon.png"
 #define ICON_BASE_CHARGING "/opt/battery-icon/icons/base-charging-icon.png"
 #define ICON_BASE_EMPTY "/opt/battery-icon/icons/base-empty-icon.png"
-
+// stand-by screen icons
 #define ICON_BASE_SB "/opt/battery-icon/icons/base-sb-icon.png"
 #define ICON_SB "/opt/battery-icon/icons/sb-icon.png"
+
+unsigned int bat_fill_color_strip[37] = {
+    0x67B808,
+    0x66B708,
+    0x66B608,
+    0x65B508,
+    0x64B308,
+    0x63B207,
+    0x62B007,
+    0x61AF07,
+    0x60AD07,
+    0x5EAB07,
+    0x5DA907,
+    0x5CA706,
+    0x5AA506,
+    0x59A306,
+    0x58A106,
+    0x569E06,
+    0x559C05,
+    0x539A05,
+    0x529805,
+    0x509505,
+    0x4F9305,
+    0x4D9104,
+    0x4C8F04,
+    0x4A8C04,
+    0x498A04,
+    0x478804,
+    0x468603,
+    0x458403,
+    0x438203,
+    0x428003,
+    0x417E03,
+    0x407D03,
+    0x3F7B02,
+    0x3E7A02,
+    0x3D7802,
+    0x3C7702,
+    0x3B7602
+    
+/*    0x69C200,
+    0x68C000,
+    0x67BF00,
+    0x66BD00,
+    0x64BA00,
+    0x63B800,
+    0x62B500,
+    0x60B200,
+    0x5FAF00,
+    0x5DAC00,
+    0x5BA900,
+    0x59A600,
+    0x58A200,
+    0x569F00,
+    0x549B00,
+    0x529800,
+    0x509400,
+    0x4E9000,
+    0x4C8D00,
+    0x4A8900,
+    0x488600,
+    0x468200,
+    0x457F00,
+    0x437C00,
+    0x417900,
+    0x407600,
+    0x3E7300,
+    0x3D7000,
+    0x3B6E00,
+    0x3A6B00,
+    0x396900,
+    0x386800
+    */
+};
 
 class IconGenerator : public QObject
 {
@@ -151,7 +225,7 @@ void IconGenerator::drawCurrentState()
     }
 
     QColor fillColor(0x00b000);     // green
-    int fillWidth = pctUser * 70 / 100; // we only have 70 pixeles to fill
+    int fillWidth = pctUser * 56 / 100; // we only have 49 pixeles to fill
     if (batState == MeeGo::QmBattery::StateLow) {
         fillColor.setRgb(0xe00000); // red
         fillWidth = 4; // keep a min of 4 pixels so that the red color is visible
@@ -159,9 +233,13 @@ void IconGenerator::drawCurrentState()
     QPainter painter(&icon);
     QPen pen(QColor("white"));
     painter.setPen(pen);
-    painter.fillRect(2, 22, fillWidth, 38, fillColor);
 
-    painter.setFont(QFont("Arial", 20, QFont::Bold)); // for 100% font 20
+    for (int i = 0; i < 37; i++) {
+        fillColor.setRgb(bat_fill_color_strip[i]);
+        painter.fillRect(10, 21 + i, fillWidth, 1, fillColor);
+    }
+
+    painter.setFont(QFont("Arial", 25, QFont::Bold)); // for 100% font 20
     painter.drawText(3, 15, 70, 50, Qt::AlignCenter, pctStr); // for 100% x = 3
 
     painter.end();
