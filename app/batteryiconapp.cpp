@@ -213,7 +213,9 @@ void BatteryIconApp::aboutTriggered()
     QGraphicsLinearLayout *dialogLayout = new QGraphicsLinearLayout(Qt::Vertical);
     MDialog *dialog = new MDialog("Battery Icon", M::CloseButton);
     MLabel *label = new MLabel( "Battery Icon is created by <br>"
-            "<a href=\"http://cristiboian.com\">Cristi Boian</a>.");
+            "<a href=\"http://cristiboian.com\">Cristi Boian</a>.<br>"
+            "Icon designed by <a href=\"http://www.pixelweed.com\">Sandor F. Szabo</a>");
+    
     label->setWrapMode(QTextOption::WordWrap);
     label->setWordWrap(true);
     label->setStyleName("CommonQueryText");

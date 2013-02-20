@@ -227,12 +227,12 @@ void IconGenerator::drawCurrentState()
 
     QPainter painter(&icon);
     QColor fillColor(0x00b000);     // green
-    int fillWidth = pctUser * 56 / 100; // we only have 56 pixeles to fill
+    int fillWidth = pctUser * 56 / 100; // we only have 56 pixels to fill
     //low state
     if (batState == MeeGo::QmBattery::StateLow) {
         fillColor.setRgb(0xe00000); // red
-        // keep a min of 4 pixels so that the red color is visible
-        painter.fillRect(10, 21, 4, 37, fillColor);
+        // keep a min of 5 pixels so that the red color is visible
+        painter.fillRect(10, 21, 5, 37, fillColor);
     } else { // normal state
         for (int i = 0; i < 37; i++) {
             fillColor.setRgb(bat_fill_color_strip[i]);
@@ -242,7 +242,7 @@ void IconGenerator::drawCurrentState()
     QPen pen(QColor("white"));
     painter.setPen(pen);
     painter.setFont(QFont("Arial", pctUser == 100 ? 23 : 26, QFont::Bold));
-    painter.drawText(4, 15, 70, 50, Qt::AlignCenter, pctStr); // for 100% x = 3
+    painter.drawText(4, 15, 70, 50, Qt::AlignCenter, pctStr);
 
     if (chState == MeeGo::QmBattery::StateCharging) {
         QImage chargingIcon(ICON_CHARGING);
@@ -270,15 +270,13 @@ void IconGenerator::drawCurrentState()
     }
     painter.begin(&sbIcon);
     painter.setPen(pen); // reuse
-    painter.setFont(QFont("Arial", 25, QFont::DemiBold));
-    painter.drawText(0, 11, 65, 40, Qt::AlignCenter, pctStr);
+    painter.setFont(QFont("Arial", pctUser == 100 ? 21 : 26, QFont::DemiBold));
+    painter.drawText(0, 11, 67, 40, Qt::AlignCenter, pctStr);
 
-    
     int fillWidthSB = pctUser * 30 / 100;
     
     if (batState == MeeGo::QmBattery::StateLow) {
         fillColor.setRgb(0xe00000); // red
-        // keep a min of 4 pixels so that the red color is visible
         painter.fillRect(77, 20, 5, 20, fillColor);
     } else { // normal state
         fillColor.setRgb(0xFFFFFF);
