@@ -44,7 +44,45 @@
 #define ICON_SB "/opt/battery-icon/icons/sb-icon.png"
 
 unsigned int bat_fill_color_strip[37] = {
-    0x67B808,
+    0x8BCD19,
+    0x8ACC19,
+    0x8ACB19,
+    0x89C919,
+    0x88C917,
+    0x87C717,
+    0x86C617,
+    0x85C517,
+    0x83C317,
+    0x82C217,
+    0x81C015,
+    0x7FBF15,
+    0x7EBD15,
+    0x7DBC15,
+    0x7CB915,
+    0x7BB813,
+    0x79B613,
+    0x78B513,
+    0x76B213,
+    0x75B113,
+    0x73AF10,
+    0x72AD10,
+    0x70AB10,
+    0x6FA910,
+    0x6DA810,
+    0x6CA60D,
+    0x6BA40D,
+    0x69A30D,
+    0x68A10D,
+    0x679F0D,
+    0x659F0D,
+    0x649D0A,
+    0x639C0A,
+    0x629A0A,
+    0x61990A,
+    0x61990A,
+    0x60990A
+    
+    /*0x67B808,
     0x66B708,
     0x66B608,
     0x65B508,
@@ -80,7 +118,7 @@ unsigned int bat_fill_color_strip[37] = {
     0x3E7A02,
     0x3D7802,
     0x3C7702,
-    0x3B7602
+    0x3B7602*/
 };
 
 class IconGenerator : public QObject
@@ -204,7 +242,7 @@ void IconGenerator::drawCurrentState()
     QPen pen(QColor("white"));
     painter.setPen(pen);
     painter.setFont(QFont("Arial", pctUser == 100 ? 23 : 26, QFont::Bold));
-    painter.drawText(3, 15, 70, 50, Qt::AlignCenter, pctStr); // for 100% x = 3
+    painter.drawText(4, 15, 70, 50, Qt::AlignCenter, pctStr); // for 100% x = 3
 
     if (chState == MeeGo::QmBattery::StateCharging) {
         QImage chargingIcon(ICON_CHARGING);
@@ -232,19 +270,19 @@ void IconGenerator::drawCurrentState()
     }
     painter.begin(&sbIcon);
     painter.setPen(pen); // reuse
-    painter.setFont(QFont("Arial", 23, QFont::DemiBold));
-    painter.drawText(0, 15, 60, 40, Qt::AlignCenter, pctStr);
+    painter.setFont(QFont("Arial", 25, QFont::DemiBold));
+    painter.drawText(0, 11, 65, 40, Qt::AlignCenter, pctStr);
 
     
-    int fillWidthSB = pctUser * 43 / 100;
+    int fillWidthSB = pctUser * 30 / 100;
     
     if (batState == MeeGo::QmBattery::StateLow) {
         fillColor.setRgb(0xe00000); // red
         // keep a min of 4 pixels so that the red color is visible
-        painter.fillRect(65, 18, 6, 23, fillColor);
+        painter.fillRect(77, 20, 5, 20, fillColor);
     } else { // normal state
         fillColor.setRgb(0xFFFFFF);
-        painter.fillRect(65, 18, fillWidthSB, 23, fillColor);
+        painter.fillRect(77, 20, fillWidthSB, 20, fillColor);
     }
 
     

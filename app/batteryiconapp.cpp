@@ -49,7 +49,7 @@ BatteryIconApp::BatteryIconApp() :
     connect(&bat, SIGNAL(chargingStateChanged(MeeGo::QmBattery::ChargingState)),
             this, SLOT(chargingChanged(MeeGo::QmBattery::ChargingState)));
 
-    connect(&psSwitch, SIGNAL(clicked(bool)), this, SLOT(powerSaveClicked(bool)));
+    connect(&psSwitch, SIGNAL(toggled(bool)), this, SLOT(powerSaveClicked(bool)));
     connect(&sbSwitch, SIGNAL(toggled(bool)), this, SLOT(standByClicked(bool)));
 
     opLogo = new GConfItem(GCONF_OP_LOGO);
