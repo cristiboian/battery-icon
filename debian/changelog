@@ -1,8 +1,9 @@
 battery-icon (2.1) harmattan; urgency=low
 
-  * TODO
+  * New icons for app grid and stand-by screen.
+  * Small fixes.
 
- -- Cristi Boian <apps@cristiboian.com>  Sun, 17 Feb 2013 22:04:41 +0200
+ -- Cristi Boian <apps@cristiboian.com>  Wed, 20 Feb 2013 23:16:05 +0200
 
 battery-icon (2.0) harmattan; urgency=low
 
