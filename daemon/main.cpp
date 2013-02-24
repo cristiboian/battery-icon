@@ -43,82 +43,16 @@
 #define ICON_BASE_SB "/opt/battery-icon/icons/base-sb-icon.png"
 #define ICON_SB "/opt/battery-icon/icons/sb-icon.png"
 
-unsigned int bat_fill_color_strip[37] = {
-    0x8BCD19,
-    0x8ACC19,
-    0x8ACB19,
-    0x89C919,
-    0x88C917,
-    0x87C717,
-    0x86C617,
-    0x85C517,
-    0x83C317,
-    0x82C217,
-    0x81C015,
-    0x7FBF15,
-    0x7EBD15,
-    0x7DBC15,
-    0x7CB915,
-    0x7BB813,
-    0x79B613,
-    0x78B513,
-    0x76B213,
-    0x75B113,
-    0x73AF10,
-    0x72AD10,
-    0x70AB10,
-    0x6FA910,
-    0x6DA810,
-    0x6CA60D,
-    0x6BA40D,
-    0x69A30D,
-    0x68A10D,
-    0x679F0D,
-    0x659F0D,
-    0x649D0A,
-    0x639C0A,
-    0x629A0A,
-    0x61990A,
-    0x61990A,
-    0x60990A
-    
-    /*0x67B808,
-    0x66B708,
-    0x66B608,
-    0x65B508,
-    0x64B308,
-    0x63B207,
-    0x62B007,
-    0x61AF07,
-    0x60AD07,
-    0x5EAB07,
-    0x5DA907,
-    0x5CA706,
-    0x5AA506,
-    0x59A306,
-    0x58A106,
-    0x569E06,
-    0x559C05,
-    0x539A05,
-    0x529805,
-    0x509505,
-    0x4F9305,
-    0x4D9104,
-    0x4C8F04,
-    0x4A8C04,
-    0x498A04,
-    0x478804,
-    0x468603,
-    0x458403,
-    0x438203,
-    0x428003,
-    0x417E03,
-    0x407D03,
-    0x3F7B02,
-    0x3E7A02,
-    0x3D7802,
-    0x3C7702,
-    0x3B7602*/
+#define ICON_FILL_HEIGHT 37
+unsigned int bat_fill_color_strip[ICON_FILL_HEIGHT] = {
+    0x8BCD19, 0x8ACC19, 0x8ACB19, 0x89C919, 0x88C917,
+    0x87C717, 0x86C617, 0x85C517, 0x83C317, 0x82C217,
+    0x81C015, 0x7FBF15, 0x7EBD15, 0x7DBC15, 0x7CB915,
+    0x7BB813, 0x79B613, 0x78B513, 0x76B213, 0x75B113,
+    0x73AF10, 0x72AD10, 0x70AB10, 0x6FA910, 0x6DA810,
+    0x6CA60D, 0x6BA40D, 0x69A30D, 0x68A10D, 0x679F0D,
+    0x659F0D, 0x649D0A, 0x639C0A, 0x629A0A, 0x61990A,
+    0x61990A, 0x60990A
 };
 
 class IconGenerator : public QObject
@@ -212,12 +146,6 @@ void IconGenerator::drawCurrentState()
 
     QString iconBaseFile(ICON_BASE);
 
-    /* this does not work properly because it takes so much time
-     * for the daemon to start after boot (~ 1min)
-    if (batState == MeeGo::QmBattery::StateEmpty)
-        iconBaseFile = ICON_BASE_EMPTY;
-    */
-
     // Application icon
     QImage icon(iconBaseFile);
     if (icon.isNull()) {
@@ -228,13 +156,13 @@ void IconGenerator::drawCurrentState()
     QPainter painter(&icon);
     QColor fillColor(0x00b000);     // green
     int fillWidth = pctUser * 56 / 100; // we only have 56 pixels to fill
-    //low state
-    if (batState == MeeGo::QmBattery::StateLow) {
+    
+    if (batState == MeeGo::QmBattery::StateLow) { //low state
         fillColor.setRgb(0xe00000); // red
         // keep a min of 5 pixels so that the red color is visible
-        painter.fillRect(10, 21, 5, 37, fillColor);
-    } else { // normal state
-        for (int i = 0; i < 37; i++) {
+        painter.fillRect(10, 21, 5, ICON_FILL_HEIGHT, fillColor);
+    } else {                                      // normal state
+        for (int i = 0; i < ICON_FILL_HEIGHT; i++) {
             fillColor.setRgb(bat_fill_color_strip[i]);
             painter.fillRect(10, 21 + i, fillWidth, 1, fillColor);
         }
