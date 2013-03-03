@@ -4,7 +4,6 @@
 #chown user.users /usr/share/applications/battery-icon.desktop
 chown -R user.users /opt/battery-icon/icons
 
-#echo FIXME start!!!
 start apps/battery-icon
 
 GCONF_OP_LOGO="/desktop/meego/screen_lock/low_power_mode/operator_logo"
